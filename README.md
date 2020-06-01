@@ -12,6 +12,10 @@ Nach dem ersten mal starten erzeugt sich automatisch eine bots.json in deinem co
 }
 ```
 
+## Befehle
+`.knast @User`
+*Knaste oder entknaste einen User. Permission: discord.kick_members*
+
 
 ## Disclaimer
 

@@ -1,11 +1,16 @@
+from asyncio import sleep
+
 from discord.ext import commands
 import discord
 import json
 
+
 def has_rights():
     def predicate(ctx):
         return ctx.author.guild_permissions.kick_members
+
     return commands.check(predicate)
+
 
 class KnastCommand(commands.Cog):
     def __init__(self, bot):
@@ -46,7 +51,17 @@ class KnastCommand(commands.Cog):
 
             await member.add_roles(ctx.guild.get_role(roleid))
             await ctx.send(f'User {member.display_name} geknasted!')
-            
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        await sleep(5)
+        users = self.bot.users
+        if users[f'{member.id}']:
+            for role in member.roles[1:]:
+                await member.remove_roles(role)
+            config = self.bot.config
+            roleid = config['knast_roleId']
+            await member.add_roles(member.guild.get_role(roleid))
 
 
 #######################################################
